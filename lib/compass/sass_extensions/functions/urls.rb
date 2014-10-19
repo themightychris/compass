@@ -44,9 +44,10 @@ module Compass::SassExtensions::Functions::Urls
       if base.respond_to?(:declare)
         base.declare :font_url,       [:path]
         base.declare :font_url,       [:path, :only_path]
+        base.declare :font_url,      [:path, :only_path, :cache_buster]
       end
     end
-    def font_url(path, only_path = Sass::Script::Bool.new(false))
+    def font_url(path, only_path = Sass::Script::Bool.new(false), cache_buster = Sass::Script::Bool.new(true))
       path = path.value # get to the string value of the literal.
 
       # Short curcuit if they have provided an absolute url.
@@ -62,7 +63,21 @@ module Compass::SassExtensions::Functions::Urls
                           Compass.configuration.http_fonts_path
                         end
 
+      # Compute the real path to the font on the file stystem if the fonts_dir is set.
+      real_path = if Compass.configuration.fonts_dir
+        File.join(Compass.configuration.project_path, Compass.configuration.fonts_dir, path)
+      end
+
       path = "#{http_fonts_path}/#{path}"
+
+      # Compute and append the cache buster if there is one.
+      if cache_buster.to_bool
+        if cache_buster.is_a?(Sass::Script::String)
+          path += "?#{cache_buster.value}"
+        else
+          path = cache_busted_path(path, real_path)
+        end
+      end
 
       if only_path.to_bool
         Sass::Script::String.new(clean_path(path))
@@ -235,7 +250,7 @@ module Compass::SassExtensions::Functions::Urls
     else
       path = cache_buster[:path] if cache_buster[:path]
     end
-    
+
     if cache_buster[:query]
       "%s?%s" % [path, cache_buster[:query]]
     else
