@@ -1,31 +1,6 @@
-# Compass Stylesheet Authoring Framework
+This repository contains a forked version of compass 0.12.2 for backporting new Compass features and bug fixes for use in Sencha CMD
 
-Build Status: ![Build Status](https://secure.travis-ci.org/chriseppstein/compass.png)
-
-Code Quality: [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/chriseppstein/compass)
-
-## Resources
-
-* [Compass Homepage](http://compass-style.org/)
-* [Installing Compass](http://compass-style.org/install/)
-* [Compass Reference](http://compass-style.org/install/reference/)
-
-## Author
-Compass is written by [Chris Eppstein][chris_eppstein].<br>
-Chris is the Software Architect of [Caring.com][caring.com] and a member of the [Sass][sass] core team.
-
-## Core Team Members
-
-* [Scott Davis](https://github.com/scottdavis)
-* [Eric Meyer](https://github.com/ericam)
-* [Brandon Mathis](https://github.com/imathis)
-* [Anthony Short](https://github.com/anthonyshort/)
-
-## Major Contributors
-
-* [Nico Hagenburger](https://github.com/hagenburger)
-
-## License
-Copyright (c) 2008-2009 Christopher M. Eppstein<br>
-All Rights Reserved.<br>
-Released under a [slightly modified MIT License][license].
+## Installation
+- `cd /path/to/bin/Sencha/Cmd/5.0.2.271/extensions/sencha-compass/gems/gems`
+- `mv compass-0.12.2 compass-0.12.2.bak`
+- `git clone -b sencha-cmd-backports https://github.com/themightychris/compass.git compass-0.12.2`
